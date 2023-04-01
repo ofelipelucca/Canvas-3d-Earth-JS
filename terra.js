@@ -44,8 +44,8 @@ function onPointerMove(event) {
       y: (event.clientY || event.touches[0].clientY) - previousMousePosition.y,
     };
 
-    terra.rotation.y += deltaMove.x * 0.002;
-    terra.rotation.x += deltaMove.y * 0.002;
+    terra.rotation.y += deltaMove.x * 0.008;
+    terra.rotation.x += deltaMove.y * 0.008;
 
     previousMousePosition = {
       x: event.clientX || event.touches[0].clientX,
