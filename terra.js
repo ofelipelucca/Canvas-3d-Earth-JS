@@ -1,32 +1,24 @@
 // Crie a cena, a câmera e a luz
 const cena = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 900);
+const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 900);
 camera.position.set(0, 0, 3);
-const luz = new THREE.AmbientLight(0xffffff);
 
 // Carrega a textura da terra
 const terraTexture = new THREE.TextureLoader().load('https://p2.piqsels.com/preview/501/577/297/earth-map-summer-july.jpg');
+const ceuTexture = new THREE.TextureLoader().load('https://cdn.pixabay.com/photo/2016/09/08/12/00/stars-1654074_960_720.jpg');
 
 // Cria a esfera para representar a terra
 const terraGeometry = new THREE.SphereGeometry(1, 32, 32);
 const terraMaterial = new THREE.MeshBasicMaterial({ map: terraTexture });
 const terra = new THREE.Mesh(terraGeometry, terraMaterial);
 
-// Cria as nuvens
-const nuvensTexture = new THREE.TextureLoader().load('https://images.unsplash.com/photo-1603881318118-18b1a336ea81');
-const nuvensGeometry = new THREE.SphereGeometry(1.01, 32, 32);
-const nuvensMaterial = new THREE.MeshLambertMaterial({
-  map: nuvensTexture,
-  transparent: true,
-});
-const nuvens = new THREE.Mesh(nuvensGeometry, nuvensMaterial);
+const ceuGeometry = new THREE.SphereGeometry(250, 64, 64);
+const ceuMaterial = new THREE.MeshBasicMaterial({ map: ceuTexture, side: THREE.BackSide });
+const ceu = new THREE.Mesh(ceuGeometry, ceuMaterial);
 
 // Adicione a esfera à cena
+cena.add(ceu);
 cena.add(terra);
-cena.add(luz);
-
-// Adicione as nuvens à Terra
-terra.add(nuvens);
 
 // Adicione event listener para capturar eventos do mouse
 let isMouseDown = false;
@@ -36,47 +28,41 @@ let previousMousePosition = {
 };
 let isMoving = false;
 
-window.addEventListener('mousedown', (event) => {
+function onPointerStart(event) {
   isMouseDown = true;
   previousMousePosition = {
-    x: event.clientX,
-    y: event.clientY,
+    x: event.clientX || event.touches[0].clientX,
+    y: event.clientY || event.touches[0].clientY,
   };
   isMoving = true;
-});
+}
 
-window.addEventListener('mousemove', (event) => {
+function onPointerMove(event) {
   if (isMouseDown) {
     const deltaMove = {
-      x: event.clientX - previousMousePosition.x,
-      y: event.clientY - previousMousePosition.y,
+      x: (event.clientX || event.touches[0].clientX) - previousMousePosition.x,
+      y: (event.clientY || event.touches[0].clientY) - previousMousePosition.y,
     };
 
     terra.rotation.y += deltaMove.x * 0.002;
     terra.rotation.x += deltaMove.y * 0.002;
 
     previousMousePosition = {
-      x: event.clientX,
-      y: event.clientY,
+      x: event.clientX || event.touches[0].clientX,
+      y: event.clientY || event.touches[0].clientY,
     };
+    ceu.rotation.copy(terra.rotation);
   }
-});
+}
 
-window.addEventListener('mouseup', (event) => {
+function onPointerEnd(event) {
   isMouseDown = false;
   isMoving = false;
-});
+}
 
-// Adicione event listener para capturar eventos de zoom do mouse
-window.addEventListener('wheel', (event) => {
-  camera.position.z += event.deltaY * 0.01;
-  if (camera.position.z < 3) {
-    camera.position.z = 3;
-  }
-  if (camera.position.z > 7) {
-    camera.position.z = 7;
-  }
-});
+window.addEventListener('pointerdown', onPointerStart);
+window.addEventListener('pointermove', onPointerMove);
+window.addEventListener('pointerup', onPointerEnd);
 
 // Anexe o canvas à página HTML
 const canvas = document.querySelector('#canvas');
@@ -85,8 +71,7 @@ const container = document.querySelector('#canvas-container');
 container.appendChild(canvas);
 
 // Crie o renderizador
-const renderizador = new THREE.WebGLRenderer({ canvas, alpha: true});
-cena.background = null;
+const renderizador = new THREE.WebGLRenderer({ canvas });
 
 function onWindowResize() {
     const width = container.clientWidth;
@@ -104,9 +89,9 @@ onWindowResize();
 function animar() {
     requestAnimationFrame(animar);
     if (!isMoving) {
-    camera.lookAt(terra.position);
+      camera.lookAt(terra.position);
     }
-  renderizador.render(cena, camera);
+    renderizador.render(cena, camera);
 }
 
 // Inicie a animação

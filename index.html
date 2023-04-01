@@ -13,17 +13,20 @@
             background-color: #2dcc4d;
             margin: 0;
             padding: 0;
-            height: 79%;
+            height: 100%;
+            overflow: hidden;
         }
         h1 {
-            text-align: center;
+            left: 45%;
             font-size: 7vh;
             color: white;
+            position: fixed;
+            user-select: none;
         }
         #canvas-container {
-            position: relative;
-            width: 99.5%;
-            height: 99%;
+            position: absolute;
+            width: 100%;
+            height: 100%;
         }
 
         #canvas {
@@ -32,11 +35,11 @@
         }
     </style>
 </head>
-    <h1>Glabo</h1>
-        <div id="canvas-container">
-            <canvas id="canvas"></canvas>
-            <script src="terra.js"></script>
-        </div>
 <body>
+    <div id="canvas-container">
+        <h1>Glabo</h1>
+        <canvas id="canvas"></canvas>
+        <script src="terra.js"></script>
+    </div>
 </body>
 </html>
