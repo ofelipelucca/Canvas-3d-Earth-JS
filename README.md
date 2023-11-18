@@ -1,8 +1,8 @@
-# Glabo, a Terra em 3D
+# 🌎 Glabo, a Terra em 3D
 
 Este projeto utiliza a biblioteca Three.js para criar uma simulação interativa da Terra em um ambiente de estrelas. Os usuários podem interagir com a cena movendo a Terra com o mouse.
 
-## Estrutura do Código
+## 👨‍💻 Estrutura do Código
 
 O código JavaScript cria uma cena 3D composta por uma esfera representando a Terra e um ambiente estelar ao redor. A interação do usuário permite girar a Terra em torno de seu eixo usando o mouse.
 
@@ -13,12 +13,12 @@ O código JavaScript cria uma cena 3D composta por uma esfera representando a Te
 - **Renderizador:** Configuração do renderizador WebGL e ajuste dinâmico do tamanho da janela.
 - **Função de Animação:** Inicia a animação, atualizando a renderização da cena.
 
-## Uso
+## 🔎 Uso
 
 1. Abra o arquivo `index.html` em um navegador.
 2. Interaja com a cena movendo o mouse para girar a Terra.
 3. Observe a simulação interativa da Terra no espaço.
 
-## Autor
+## 📌 Autor
 
 Felipe Lucca Taumaturgo de Oliveira
