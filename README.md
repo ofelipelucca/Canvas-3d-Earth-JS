@@ -15,9 +15,8 @@ O código JavaScript cria uma cena 3D composta por uma esfera representando a Te
 
 ## 🔎 Uso
 
-1. Abra o arquivo `index.html` em um navegador.
-2. Interaja com a cena movendo o mouse para girar a Terra.
-3. Observe a simulação interativa da Terra no espaço.
+1. Interaja com a cena movendo o mouse para girar a Terra.
+2. Observe a simulação interativa da Terra no espaço.
 
 ## 📌 Autor
 
